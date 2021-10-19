@@ -53,7 +53,6 @@ export class MainComponent implements OnDestroy {
     ngOnDestroy() {
         this.unSubscriber$.next();
         this.unSubscriber$.complete();
-
     }
 }
 
@@ -74,11 +73,8 @@ export class TextChildComponent {
         this._router.navigate(["test-six"]);
     }
 
-
-
     ngAfterContentInit() {
         if (this.skip) this._srv.SetTest("angular test #6");
-
     }
 
 }

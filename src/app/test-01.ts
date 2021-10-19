@@ -24,7 +24,7 @@ import { CommonModule } from '@angular/common';
 })
 export class Test01Component {
 
-    loan_amount: number = 10000;
+    loan_amount: number = 1000;
     monthly_payment: number = 200;
     late_payment = 10;
 

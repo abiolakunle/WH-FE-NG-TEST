@@ -33,7 +33,7 @@ export class UserNameComponent {
         this.firstName = firstName;
 
         if (!!this.lastName) {
-            this.userName = `${firstName}_${this.lastName}_${this.generateRandomNumber(1, 9)}`.toLowerCase();
+            this.userName = this.generateUserName(firstName, this.lastName);
         }
     }
 
@@ -42,8 +42,12 @@ export class UserNameComponent {
         this.lastName = lastName;
 
         if (!!this.firstName) {
-            this.userName = `${this.firstName}_${lastName}_${this.generateRandomNumber(1, 9)}`.toLowerCase();
+            this.userName = this.generateUserName(this.firstName, lastName);
         }
+    }
+
+    generateUserName(firstName: string, lastName: string) {
+        return `${firstName}_${lastName}_${this.generateRandomNumber(1, 9)}`.toLowerCase();
     }
 
     generateRandomNumber(min: number, max: number) {
