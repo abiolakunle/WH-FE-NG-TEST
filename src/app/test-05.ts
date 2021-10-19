@@ -20,6 +20,7 @@ export class TestService {
 
     SetTest(test: string) {
         this.test.next(test);
+        this.test.unsubscribe();
     }
 }
 
@@ -67,8 +68,9 @@ export class TextChildComponent {
 
 
 
-    ngAfterViewInit() {
+    ngAfterContentInit() {
         if (this.skip) this._srv.SetTest("angular test #6");
+
     }
 
 }
