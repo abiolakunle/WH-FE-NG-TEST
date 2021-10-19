@@ -4,10 +4,11 @@
  * * Spot the memory leak
  * 
  */
-import { Component, NgModule, Injectable, Input } from '@angular/core';
+import { Component, NgModule, Injectable, Input, OnDestroy } from '@angular/core';
 import { RouterModule, Router } from "@angular/router";
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Injectable()
@@ -20,7 +21,6 @@ export class TestService {
 
     SetTest(test: string) {
         this.test.next(test);
-        this.test.unsubscribe();
     }
 }
 
@@ -34,8 +34,10 @@ export class TestService {
                 `,
     styles: []
 })
-export class MainComponent {
+export class MainComponent implements OnDestroy {
     test: string = null;
+
+    unSubscriber$ = new Subject<void>()
 
     constructor(private _srv: TestService) {
 
@@ -43,9 +45,15 @@ export class MainComponent {
 
     ngOnInit() {
 
-        this._srv.test.subscribe(test => {
+        this._srv.test.pipe(takeUntil(this.unSubscriber$)).subscribe(test => {
             this.test = test;
         });
+    }
+
+    ngOnDestroy() {
+        this.unSubscriber$.next();
+        this.unSubscriber$.complete();
+
     }
 }
 
